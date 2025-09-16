@@ -28,8 +28,9 @@ export const MovieSearchResults: React.FC<MovieSearchResultsProps> = ({
   const tableContainerRef = useRef<HTMLDivElement>(null);
   
   const handleMovieClick = (movie: Movie) => {
-    // 直接在新标签页打开，不显示弹窗
-    window.open(`/src/pages/video-player.html?movieId=${movie.id}`, '_blank');
+    // 打开新网页播放器
+    const playerUrl = `/player.html?movieId=${movie.id}&title=${encodeURIComponent(movie.name)}`;
+    window.open(playerUrl, '_blank');
     onMovieClick(movie);
   };
 
@@ -250,6 +251,7 @@ export const MovieSearchResults: React.FC<MovieSearchResultsProps> = ({
           </div>
         </div>
       )}
+
     </div>
   );
 };

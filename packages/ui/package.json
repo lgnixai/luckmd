@@ -12,10 +12,13 @@
   },
   "dependencies": {
     "@luckmd/core": "*"
+    
+
   },
   "devDependencies": {
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "react-resizable-panels": "^2.0.21",
     "react": "^19",
     "react-dom": "^19",
     "tsup": "^8.1.0",
@@ -23,6 +26,7 @@
   },
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0-rc",
-    "react-dom": "^18.0.0 || ^19.0.0-rc"
+    "react-dom": "^18.0.0 || ^19.0.0-rc",
+    "react-resizable-panels": "^2.0.0"
   }
 }

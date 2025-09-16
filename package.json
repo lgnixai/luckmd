@@ -16,5 +16,9 @@
   "devDependencies": {
     "turbo": "^2.0.0",
     "typescript": "^5"
+  },
+  "dependencies": {
+    "@radix-ui/react-scroll-area": "^1.2.10",
+    "hls.js": "^1.6.12"
   }
 }

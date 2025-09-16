@@ -254,6 +254,13 @@ export class ApiService {
     return apiClient.get(`/spider/tasks/${id}`)
   }
 
+  /**
+   * 获取电影详情和剧集信息
+   */
+  async getMovieWithEpisodes(id: number): Promise<ApiResponse<Movie & { episodes: Episode[] }>> {
+    return apiClient.get(`/movies/${id}/episodes`)
+  }
+
 }
 
 // 创建默认 API 服务实例

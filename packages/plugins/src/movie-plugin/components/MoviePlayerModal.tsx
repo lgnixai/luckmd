@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { X, Play, Pause, Volume2, VolumeX, Maximize, List } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { Movie, Episode } from '../api-service';
-import { apiService } from '../api-service';
+import { Button } from '../../components/ui/button';
+import { Badge } from '../../components/ui/badge';
+import { ScrollArea } from '../../components/ui/scroll-area';
+import { Movie, Episode } from '../../api-service';
+import { apiService } from '../../api-service';
 import Hls from 'hls.js';
 
 // 声明全局Plyr类型

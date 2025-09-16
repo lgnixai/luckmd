@@ -1,6 +1,7 @@
 import React from 'react';
 import { LuckmdPlugin, RenderSlot } from '@luckmd/core';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { PanelGroup, Panel, PanelResizeHandle } from 'react-resizable-panels';
 
 export interface MultiPaneShellProps {
   plugins: LuckmdPlugin[];
@@ -65,7 +66,7 @@ export const MultiPaneShell: React.FC<MultiPaneShellProps> = ({ plugins, onActiv
         </button>
       </div>
 
-      {/* left: icon list - 始终显示 */}
+      {/* left: icon list - 固定宽度 */}
       <div className="w-14 border-r bg-sidebar text-sidebar-foreground p-2 space-y-2">
         {plugins.map((p) => (
           <button
@@ -79,49 +80,63 @@ export const MultiPaneShell: React.FC<MultiPaneShellProps> = ({ plugins, onActiv
         ))}
       </div>
 
-      {/* middle: plugin sidebar */}
-      {middleSidebarVisible && (
-        <div className="w-[350px] border-r bg-sidebar text-sidebar-foreground overflow-auto flex flex-col">
-        <div className="flex-1 overflow-auto">
-          {active?.Sidebar ? React.createElement(active.Sidebar) : (
-            <div className="p-4 text-sm text-muted-foreground">选择左侧插件</div>
+      {/* 右侧区域使用 PanelGroup 进行可调整布局 */}
+      <div className="flex-1 h-full">
+        <PanelGroup direction="horizontal" className="h-full">
+          {middleSidebarVisible && (
+            <>
+              <Panel defaultSize={24} minSize={15} className="min-w-0">
+                <div className="h-full border-r bg-sidebar text-sidebar-foreground overflow-auto flex flex-col">
+                  <div className="flex-1 overflow-auto">
+                    {active?.Sidebar ? React.createElement(active.Sidebar) : (
+                      <div className="p-4 text-sm text-muted-foreground">选择左侧插件</div>
+                    )}
+                  </div>
+                  <RenderSlot name="sidebar.footer" />
+                </div>
+              </Panel>
+              <PanelResizeHandle className="w-[3px] bg-border hover:bg-border/80 transition-colors" />
+            </>
           )}
-        </div>
-        <RenderSlot name="sidebar.footer" />
-        </div>
-      )}
 
-      {/* right: content area */}
-      <div className="flex-1 overflow-auto">
-        {active?.Content ? React.createElement(active.Content) : (
-          <div className="p-4 text-muted-foreground">内容区</div>
-        )}
-      </div>
-
-      {/* right sidebar */}
-      {rightSidebarVisible && (
-        <div className="w-[300px] border-l bg-sidebar text-sidebar-foreground overflow-auto flex flex-col">
-        <div className="p-3 border-b">
-          <h3 className="text-sm font-medium">右侧面板</h3>
-        </div>
-        <div className="flex-1 overflow-auto p-3">
-          <div className="space-y-3">
-            <div className="text-sm text-muted-foreground">
-              <p>这里可以放置：</p>
-              <ul className="mt-2 space-y-1 text-xs">
-                <li>• 属性面板</li>
-                <li>• 文件树</li>
-                <li>• 搜索结果</li>
-                <li>• 调试信息</li>
-                <li>• 其他工具</li>
-              </ul>
+          <Panel defaultSize={rightSidebarVisible ? 56 : 76} minSize={30} className="min-w-0">
+            <div className="h-full overflow-auto">
+              {active?.Content ? React.createElement(active.Content) : (
+                <div className="p-4 text-muted-foreground">内容区</div>
+              )}
             </div>
-            <RenderSlot name="right-sidebar.content" />
-          </div>
-        </div>
-        <RenderSlot name="right-sidebar.footer" />
-        </div>
-      )}
+          </Panel>
+
+          {rightSidebarVisible && (
+            <>
+              <PanelResizeHandle className="w-[3px] bg-border hover:bg-border/80 transition-colors" />
+              <Panel defaultSize={20} minSize={15} className="min-w-0">
+                <div className="h-full border-l bg-sidebar text-sidebar-foreground overflow-auto flex flex-col">
+                  <div className="p-3 border-b">
+                    <h3 className="text-sm font-medium">右侧面板</h3>
+                  </div>
+                  <div className="flex-1 overflow-auto p-3">
+                    <div className="space-y-3">
+                      <div className="text-sm text-muted-foreground">
+                        <p>这里可以放置：</p>
+                        <ul className="mt-2 space-y-1 text-xs">
+                          <li>• 属性面板</li>
+                          <li>• 文件树</li>
+                          <li>• 搜索结果</li>
+                          <li>• 调试信息</li>
+                          <li>• 其他工具</li>
+                        </ul>
+                      </div>
+                      <RenderSlot name="right-sidebar.content" />
+                    </div>
+                  </div>
+                  <RenderSlot name="right-sidebar.footer" />
+                </div>
+              </Panel>
+            </>
+          )}
+        </PanelGroup>
+      </div>
     </div>
     </QueryClientProvider>
   );
