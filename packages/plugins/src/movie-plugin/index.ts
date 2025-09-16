@@ -5,7 +5,7 @@ import { TestComponent } from './components/TestComponent'
 
 export const moviePlugin: Plugin = {
   id: 'movie-data',
-  name: '电影数据',
+  name: '电影搜索',
   description: '展示和管理电影数据，包括采集任务状态',
   version: '1.0.0',
   author: 'BlueMD Team',

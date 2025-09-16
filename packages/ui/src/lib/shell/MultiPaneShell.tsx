@@ -15,8 +15,23 @@ export const MultiPaneShell: React.FC<MultiPaneShellProps> = ({ plugins, onActiv
   const queryClient = React.useMemo(() => new QueryClient(), []);
 
   const activate = (p: LuckmdPlugin) => {
-    setActive(p);
-    onActivate?.(p);
+    // 如果侧边栏关闭，先打开侧边栏
+    if (!middleSidebarVisible) {
+      setMiddleSidebarVisible(true);
+      setActive(p);
+      onActivate?.(p);
+      return;
+    }
+    
+    // 如果侧边栏打开
+    if (active?.id === p.id) {
+      // 如果点击的是当前激活的插件，关闭侧边栏
+      setMiddleSidebarVisible(false);
+    } else {
+      // 如果点击的是其他插件，切换内容
+      setActive(p);
+      onActivate?.(p);
+    }
   };
 
   // 首次渲染或插件变化时，自动激活第一个插件，避免首屏空白
@@ -30,7 +45,11 @@ export const MultiPaneShell: React.FC<MultiPaneShellProps> = ({ plugins, onActiv
     <QueryClientProvider client={queryClient}>
     <div className="flex h-screen bg-gray-50" data-testid="luckmd-ready">
       {/* 占位提示，便于自动化断言 */}
-      <div className="absolute left-2 top-2 text-xs text-gray-500 pointer-events-none select-none">LuckMD Ready</div>
+      {/* <div className="absolute left-2 top-10 pointer-events-none select-none">
+        <svg className="w-6 h-6 text-gray-500" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M3 3h18v18H3V3zm2 2v14h14V5H5zm2 2h2v8H7V7zm4 0h2v8h-2V7zm4 0h2v8h-2V7z"/>
+        </svg>
+      </div> */}
       
       {/* 侧边栏控制按钮 */}
       <div className="absolute top-2 right-2 flex gap-2 z-10">
@@ -72,7 +91,7 @@ export const MultiPaneShell: React.FC<MultiPaneShellProps> = ({ plugins, onActiv
           <button
             key={p.id}
             onClick={() => activate(p)}
-            className={`w-full aspect-square rounded-md flex items-center justify-center hover:bg-sidebar-accent ${active?.id === p.id ? 'bg-sidebar-accent' : ''}`}
+            className={`w-full aspect-square rounded-md flex items-center justify-center ${active?.id === p.id ? 'bg-black text-white' : 'hover:bg-sidebar-accent'}`}
             title={p.title}
           >
             {p.icon ? React.createElement(p.icon, { className: 'w-4 h-4' }) : <span className="text-xs">{p.title[0]}</span>}
@@ -87,6 +106,9 @@ export const MultiPaneShell: React.FC<MultiPaneShellProps> = ({ plugins, onActiv
             <>
               <Panel defaultSize={24} minSize={15} className="min-w-0">
                 <div className="h-full border-r bg-sidebar text-sidebar-foreground overflow-auto flex flex-col">
+                  <div className="p-3 border-b">
+                    <h3 className="text-sm font-medium">{active?.title || '左侧面板'}</h3>
+                  </div>
                   <div className="flex-1 overflow-auto">
                     {active?.Sidebar ? React.createElement(active.Sidebar) : (
                       <div className="p-4 text-sm text-muted-foreground">选择左侧插件</div>

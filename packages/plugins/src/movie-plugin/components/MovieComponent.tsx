@@ -195,9 +195,9 @@ export const MovieComponent: React.FC = () => {
 
       {/* 搜索 */}
       <Card>
-        <CardHeader>
+        {/* <CardHeader>
           <CardTitle>搜索电影</CardTitle>
-        </CardHeader>
+        </CardHeader> */}
         <CardContent>
           <Input
             placeholder="输入电影名称搜索..."

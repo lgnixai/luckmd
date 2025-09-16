@@ -108,7 +108,7 @@ export const MovieSearchSidebar: React.FC = () => {
     <div>
       {/* 关键字搜索 */}
       <div className="mb-4">
-        <h3 className="text-sm font-medium text-gray-700 mb-2">搜索电影</h3>
+        {/* <h3 className="text-sm font-medium text-gray-700 mb-2">搜索电影</h3> */}
         <div className="flex gap-2">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />

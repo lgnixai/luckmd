@@ -169,7 +169,7 @@ export const RSSSidebar: React.FC<RSSSidebarProps> = ({ mode }) => {
       {/* 头部操作区（list-only 模式：显示搜索/添加/导入/刷新按钮，保持紧凑） */}
       <div className="space-y-2">
         <div className="flex items-center justify-between">
-          <h3 className="text-lg font-semibold">RSS源管理</h3>
+          {/* <h3 className="text-lg font-semibold">RSS源管理</h3> */}
           <div className="flex gap-2">
             <Button 
               variant="outline"
